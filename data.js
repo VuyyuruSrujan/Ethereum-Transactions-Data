@@ -4,14 +4,12 @@ async function extractAllRows() {
     let driver = await new Builder().forBrowser('chrome').build();
 
     try {
-        await driver.get('https://etherscan.io/txs?ps=100');  // Replace with actual URL
+        await driver.get('https://etherscan.io/txs?ps=100'); 
 
-        // ✅ Wait for the table to load
         await driver.wait(until.elementLocated(By.css('table tbody tr')), 10000);
 
-        // ✅ Get all table rows
         let rows = await driver.findElements(By.css('table tbody tr'));
-
+        
         const labels = [
             'Column1', 'Transaction Hash', 'Type', 'Block Number',
             'Column5', 'Time', 'Column7', 'Sender', 'Column9',
@@ -29,7 +27,6 @@ async function extractAllRows() {
                 rowData[labels[i]] = text;
             }
 
-            // ✅ Extract 'From' and 'To' separately
             let fromAddress = "Not Found";
             let toAddress = "Not Found";
             
